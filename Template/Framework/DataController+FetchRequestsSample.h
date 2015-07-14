@@ -10,13 +10,13 @@
 
 @interface DataController (FetchRequestsSample)
 
--(void)fetchBookingsWithExpandSample;
-
--(void)fetchTravelAgenciesSample;
-
--(void)fetchTravelAgenciesSampleWithCompletion:(void(^)(NSArray *entities))completion;
-
--(void)fetchAvailableFlightsSampleWithParameters:(NSDictionary *)parameters WithCompletion:(void(^)(NSArray *entities))completion;
-
+//-(void)fetchBookingsWithExpandSample;
+//
+//-(void)fetchTravelAgenciesSample;
+//
+//-(void)fetchTravelAgenciesSampleWithCompletion:(void(^)(NSArray *entities))completion;
+//
+//-(void)fetchAvailableFlightsSampleWithParameters:(NSDictionary *)parameters WithCompletion:(void(^)(NSArray *entities))completion;
+//
 
 @end

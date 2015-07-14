@@ -136,6 +136,8 @@
 
 -(void) registrationInfoFinishedWithError:(NSError*)anError {
     NSLog(@"registrationInfoFinishedWithError:%@", anError);
+    
+
 }
 
 -(void) startDemoMode {
@@ -169,6 +171,8 @@
     options.enableRepeatableRequests = NO;
     
     options.conversationManager = self.httpConvManager;
+    
+    
     
     return options;
 }

@@ -16,15 +16,15 @@
 
 @interface DataController (ConfigureModelsSample)
 
-+(void)configureBookingSampleModel:(BookingSample *)model withDictionary:(NSDictionary *)dictionary;
-
-+(void)configureFlightSampleModel:(FlightSample *)model withDictionary:(NSDictionary *)dictionary;
-
-+(void)configureFlightDetailsSampleModel:(FlightDetailsSample *)model withDictionary:(NSDictionary *)dictionary;
-
-/*
- The TravelAgencySample object is CREATE/UPDATE/DELETE-enabled, so it is convenient to store the underlying <SODataEntity> entity.
- */
-+(void)configureTravelAgencySampleModel:(TravelAgencySample *)model withEntity:(id<SODataEntity>)entity;
+//+(void)configureBookingSampleModel:(BookingSample *)model withDictionary:(NSDictionary *)dictionary;
+//
+//+(void)configureFlightSampleModel:(FlightSample *)model withDictionary:(NSDictionary *)dictionary;
+//
+//+(void)configureFlightDetailsSampleModel:(FlightDetailsSample *)model withDictionary:(NSDictionary *)dictionary;
+//
+///*
+// The TravelAgencySample object is CREATE/UPDATE/DELETE-enabled, so it is convenient to store the underlying <SODataEntity> entity.
+// */
+//+(void)configureTravelAgencySampleModel:(TravelAgencySample *)model withEntity:(id<SODataEntity>)entity;
 
 @end

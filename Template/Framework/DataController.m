@@ -37,6 +37,7 @@
 #import "SODataEntitySetDefault.h"
 #import "SODataErrorDefault.h"
 
+
 #import <FXNotifications/FXNotifications.h>
 
 @interface DataController() <SODataRequestDelegate> {
@@ -115,24 +116,6 @@
     }
 }
 
-/*
-    This switch: method can be used in the application to toggle between the two modes.
-    This isn't really a typical use case in production, but does allow an application
-    to show that code is reusable in both scenarios.
-*/
-//-(void)switchWorkingMode:(WorkingModes)workingMode
-//{
-//    if (self.workingMode != workingMode) {
-//        
-//        _workingMode = workingMode;
-//        
-//        [self loadWorkingMode];
-//        
-//    } else {
-//        NSLog(@"no change in working mode: %@", @(workingMode));
-//    }
-//
-//}
 
 - (void)setupStores
 {
@@ -282,7 +265,9 @@
             if (success) {
                 
                 [self scheduleRequest:myRequest onStore:(id<SODataStoreAsync>)store completionHandler:^(NSArray *entities, id<SODataRequestExecution> requestExecution, NSError *error) {
-                    
+                    if (error){
+                        NSLog(@"ERROR: %@",error.debugDescription);
+                    }
                     completion(entities, requestExecution, error);
                 }];
                 
@@ -337,6 +322,7 @@
         if (response.isBatch)
         {
             // not yet implemented
+            NSLog(@"Batch Reuqest not implemented yet !");
         }
         else // not a batch response, only one response to handle
         {
@@ -418,6 +404,9 @@
 
 - (void) requestFailed:(id<SODataRequestExecution>)requestExecution error:(NSError *)error
 {
+    
+    //SAPMAY 20150710 TEST
+  //  NSLog (@"REQUEST FAILED !!!, %@",error.debugDescription);
 
 }
 
@@ -429,22 +418,32 @@
      callback.  The same content should be available in both, when requesting over
      network.
      */
+   // NSLog (@"REQUEST SERVER RESPONSE");
+
 }
 
 - (void) requestStarted:(id<SODataRequestExecution>)requestExecution
 {
+    //NSLog (@"REQUEST started: Tag: %@",requestExecution.request.customTag );
+    
 }
 
 - (void) requestFinished:(id<SODataRequestExecution>)requestExecution
 {
+    //NSLog (@"REQUEST finished:\n   Tag:%@\n   %u",requestExecution.request.customTag , requestExecution.status);
     
+    
+
     // build notification tag for this request
     NSString *finishedSubscription = [NSString stringWithFormat:@"%@.%@", kRequestDelegateFinished, requestExecution.request];
     
     // send notification for the finished request
-    [[NSNotificationCenter defaultCenter] postNotificationName:finishedSubscription object:requestExecution];
-    
-}
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:finishedSubscription object:requestExecution];
+        
+
+    });
+   }
 
 
 @end
