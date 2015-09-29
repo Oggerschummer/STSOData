@@ -405,7 +405,6 @@
 - (void) requestFailed:(id<SODataRequestExecution>)requestExecution error:(NSError *)error
 {
     
-    //SAPMAY 20150710 TEST
    //NSLog (@"REQUEST FAILED !!!, %@",error.debugDescription);
 
 }
