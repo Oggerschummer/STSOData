@@ -52,12 +52,61 @@
     
     SupportabilityUploader *uploader = [[SupportabilityUploader alloc] initWithHttpConversationManager:self.httpConvManager urlRequest:request];
     
-    NSArray *logData0 = [self.logManager getLogEntries:AllClientLogLevel];
-    NSLog(@"Log Data \n%@", [logData0 description]);
     
-    NSData *rawLogData = [self.logManager getRawLogData];
-    NSString *stringFromData = [[NSString alloc]initWithData:rawLogData encoding:NSUTF8StringEncoding];
-    NSLog(@"Raw Log Data\n%@", [stringFromData description]); // just to eliminate 'unused' warning in this sample
+        //Oggerschummer 20150929 BEGIN
+        //Deprecation NSArray *logData0 = [self.logManager getLogEntries:AllClientLogLevel];
+   
+    NSArray *logData0;
+    NSOutputStream * oStream;
+    
+    oStream = [[NSOutputStream alloc] initToMemory];
+    NSError *oError = Nil;
+    if ([self.logManager getLogEntries:AllClientLogLevel outputStream:&oStream error:&oError]){
+        [oStream open];
+        
+            // fill the output stream somehow
+        
+        NSData *contents = [oStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+        [oStream close];
+        logData0 = [NSKeyedUnarchiver unarchiveObjectWithData:contents];
+    }
+    else {
+        NSLog(@"Error in getting log data: %@", [oError description]);
+    }
+    
+    if (logData0){
+        NSLog(@"Log Data \n%@", [logData0 description]);
+    }
+        //Oggerschummer 20150929 END
+    
+
+        //Oggerschummer 20150929 begin
+        //Deprecation fix
+    
+        //NSData *rawLogData = [self.logManager getRawLogData];
+    NSData *rawLogData =  Nil;
+    
+    oStream = [[NSOutputStream alloc] initToMemory];
+    oError = Nil;
+    if ([self.logManager getRawLogData:&oStream error:&oError]){
+        [oStream open];
+        
+            // fill the output stream somehow
+        
+        rawLogData = [oStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+        [oStream close];
+        NSString *stringFromData = [[NSString alloc]initWithData:rawLogData encoding:NSUTF8StringEncoding];
+        NSLog(@"Raw Log Data\n%@", [stringFromData description]); // just to eliminate 'unused' warning in this sample
+
+    }
+    else {
+        NSLog(@"Error in getting log data: %@", [oError description]);
+    }
+
+    
+        //Oggerschummer 20150929 END
+    
+
     
     
     [self.logManager uploadClientLogs:uploader completion:^(NSError *error) {
