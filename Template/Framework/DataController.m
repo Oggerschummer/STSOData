@@ -349,12 +349,15 @@
                 [errorDetail setValue:e.message forKey:NSLocalizedDescriptionKey];
                 NSError *error = [NSError errorWithDomain:@"myDomain" code:[e.code integerValue] userInfo:errorDetail];
                 
+                
+#ifdef STS_SHOW_ALERT
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                 message:[NSString stringWithFormat:@"Code: %@\nMessage: %@", e.code, e.message]
                                                                delegate:self
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil, nil];
                 [alert show];
+#endif
                 // call the completion block with error and requestExecution
                 completion(nil, requestExecution, error);
             }

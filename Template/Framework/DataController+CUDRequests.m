@@ -30,12 +30,15 @@
                           
                           if (error) {
                               NSLog(@"error = %@", error);
+#ifdef STS_SHOW_ALERT
+                              
                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Updating"
                                                                               message:[NSString stringWithFormat:@"Error updating entity %@", [entity description]]
                                                                               delegate:self
                                                                               cancelButtonTitle:@"OK"
                                                                               otherButtonTitles:nil, nil];
                               [alert show];
+#endif
                               completion(NO);
                           } else {
                               completion(YES);
@@ -56,12 +59,14 @@
                           NSLog(@"%s", __PRETTY_FUNCTION__);
                           
                           if (error) {
+#ifdef STS_SHOW_ALERT
                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Deleting Entity"
                                                                               message:[NSString stringWithFormat:@"Error deleting entity %@", [entity description]]
                                                                              delegate:self
                                                                     cancelButtonTitle:@"OK"
                                                                     otherButtonTitles:nil, nil];
                               [alert show];
+#endif
                               completion(NO);
                           } else {
                               completion(YES);
