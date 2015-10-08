@@ -3,6 +3,10 @@
 A template and reusable MVC framework for the native iOS OData SAP Mobile SDK 
 
 ##A template app, and reusable framework
+--------
+ATTENTION: This version has been adjusted for SP10 PL01, no longer compatible with old versions of the SDK. (Oggerschummer, 2015.10.08)
+--------
+
 We’ve been working with the new 3.0 SP05 API set for several months now, and some common usage patterns have developed around the core application components, best practices for MVC, etc. I’ve encapsulated these in a helper template called STSOData, and am making it available both as an example, and also as a reusable framework to app developers using the SDK. 
 
 The STSOData code is not a standard product framework, but it does a lot of the bootstrapping of the core application components with the SDK that you’re going to need anyway. So, it should really speed your development, and let you take advantage of some great features without learning too much about the lower level details of the core APIs.
