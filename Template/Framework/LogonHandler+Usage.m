@@ -13,7 +13,10 @@
 
 -(void)startUsageCollection
 {
-    [Usage initUsageWithURL:[self.baseURL clientUsageURL] httpConversationManager:self.httpConvManager];
-}
+    NSError * err;
+    
+        //Oggerschummer: Adjust for SP10PL01
+    [[Usage sharedInstance] initializeUsageWithURL:[self.baseURL clientUsageURL] httpConversationManager:self.httpConvManager withError:&err];
 
+}
 @end

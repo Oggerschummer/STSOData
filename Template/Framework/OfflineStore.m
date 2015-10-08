@@ -39,11 +39,22 @@
     NSString *openStoreFailed = [NSString stringWithFormat:@"%@.%@", kStoreOpenDelegateFailed, [self description]];
     NSString *openStoreFinished = [NSString stringWithFormat:@"%@.%@", kStoreOpenDelegateFinished, [self description]];
     
-    __block Timer *t = [Usage makeTimer:@"openStore"];
+    NSError *err;
+    __block Timer *t = [[Usage sharedInstance]  makeTimer:@"openStore" withError:&err]; //Oggerschummer: Adjust for SP10PL01
     
     [[NSNotificationCenter defaultCenter] addObserverForName:openStoreFailed object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+
+            //Oggerschummer 20151008 BEGIN
+            //Changes for SP10PL01
+        NSError * err;
+        UsageInfo * uInfo = [[UsageInfo alloc]init];
+        uInfo.UIType = @"offline";
+        uInfo.UIResult = @"failed";
+        [[Usage sharedInstance] stopTimer:t info:uInfo type:nil withError:&err];
         
-        [Usage stopTimer:t info:@{@"type": @"offline", @"result" : @"failed"}];
+        
+            //       [[Usage sharedInstance] stopTimer:t info:@{@"type": @"offline", @"result" : @"failed"} ];
+            //Oggerschummer 20151008 END
         
         completion(NO);
     }];
@@ -51,8 +62,19 @@
     
     if (self.isOpen) {
         
-        [Usage stopTimer:t info:@{@"type": @"offline", @"case": @"none", @"result" : @"success"}];
         
+        
+        
+            //Oggerschummer 20151008 BEGIN
+            //Changes for SP10PL01
+        NSError * err;
+        UsageInfo * uInfo = [[UsageInfo alloc]init];
+        uInfo.UIType = @"offline";
+        uInfo.UICase = @"none";
+        uInfo.UIResult = @"success";
+        [[Usage sharedInstance] stopTimer:t info:uInfo type:nil withError:&err];
+            //[Usage stopTimer:t info:@{@"type": @"offline", @"case": @"none", @"result" : @"success"}];
+        //Oggerschummer 20151008 END
         completion(YES);
         
     } else if (self.state < SODataOfflineStoreOpen) {
@@ -63,8 +85,16 @@
             
             [[NSNotificationCenter defaultCenter] removeObserver:observer name:openStoreFinished object:observer];
             
-            [Usage stopTimer:t info:@{@"type": @"offline", @"case": @"partial", @"result" : @"success"}];
-            
+                //Oggerschummer 20151008 BEGIN
+                //Changes for SP10PL01
+            NSError * err;
+            UsageInfo * uInfo = [[UsageInfo alloc]init];
+            uInfo.UIType = @"offline";
+            uInfo.UICase = @"partial";
+            uInfo.UIResult = @"success";
+            [[Usage sharedInstance] stopTimer:t info:uInfo type:nil withError:&err];
+                //[Usage stopTimer:t info:@{@"type": @"offline", @"case": @"partial", @"result" : @"success"}];
+                //Oggerschummer 20151008 END
             completion(YES);
         }];
         
@@ -75,8 +105,17 @@
         [[NSNotificationCenter defaultCenter] addObserver:self forName:openStoreFinished object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note, id observer) {
             
             [[NSNotificationCenter defaultCenter] removeObserver:observer name:openStoreFinished object:observer];
+                //Oggerschummer 20151008 BEGIN
+                //Changes for SP10PL01
+            NSError * err;
+            UsageInfo * uInfo = [[UsageInfo alloc]init];
+            uInfo.UIType = @"offline";
+            uInfo.UICase = @"full";
+            uInfo.UIResult = @"success";
+            [[Usage sharedInstance] stopTimer:t info:uInfo type:nil withError:&err];
+                //[Usage stopTimer:t info:@{@"type": @"offline", @"case": @"full", @"result" : @"success"}];
+                //Oggerschummer 20151008 END
             
-            [Usage stopTimer:t info:@{@"type": @"offline", @"case": @"full", @"result" : @"success"}];
             
             completion(YES);
         }];
