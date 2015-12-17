@@ -259,7 +259,7 @@
     myRequest.payload = entity ? entity : nil;
     
     __block void (^openStore)(id<ODataStore>) = ^void(id<ODataStore>store) {
-    
+        
         [store openStoreWithCompletion:^(BOOL success) {
             
             if (success) {
@@ -408,7 +408,7 @@
 - (void) requestFailed:(id<SODataRequestExecution>)requestExecution error:(NSError *)error
 {
     
-   //NSLog (@"REQUEST FAILED !!!, %@",error.debugDescription);
+   NSLog (@"REQUEST FAILED !!!, %@",error.debugDescription);
 
 }
 

@@ -95,7 +95,9 @@
             [[Usage sharedInstance] stopTimer:t info:uInfo type:nil withError:&err];
                 //[Usage stopTimer:t info:@{@"type": @"offline", @"case": @"partial", @"result" : @"success"}];
                 //Oggerschummer 20151008 END
-            completion(YES);
+            if (completion){
+                completion(YES);
+            }
         }];
         
     } else if (self.state == SODataOfflineStoreClosed){
@@ -116,8 +118,9 @@
                 //[Usage stopTimer:t info:@{@"type": @"offline", @"case": @"full", @"result" : @"success"}];
                 //Oggerschummer 20151008 END
             
-            
-            completion(YES);
+            if (completion){
+                completion(YES);
+            }
         }];
         
         [self setOfflineStoreDelegate:self];
@@ -161,29 +164,35 @@
     {
         case SODataOfflineStoreOpening:
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreOpening" object:store];
             NSLog(@"SODataOfflineStoreOpening: The store has started to open\n");
             break;
             
         case SODataOfflineStoreInitializing:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreInitializing" object:store];
             NSLog(@"SODataOfflineStoreInitializing: Initializing the resources for a new store\n");
             break;
             
         case SODataOfflineStorePopulating:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStorePopulating" object:store];
             NSLog(@"SODataOfflineStorePopulating: Creating and populating the store in the mid-tier\n");
             break;
             
         case SODataOfflineStoreDownloading:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreDownloading" object:store];
             NSLog(@"SODataOfflineStoreDownloading: Downloading the populated store\n");
             break;
             
         case SODataOfflineStoreOpen:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreOpen" object:store];
             NSLog(@"SODataOfflineStoreOpen: The store has opened successfully\n");
             break;
             
         case SODataOfflineStoreClosed:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreClosed" object:store];
             NSLog(@"SODataOfflineStoreClosed: The store has been closed by the user while still opening\n");
             break;
-            
+        
     }
 }
 

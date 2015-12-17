@@ -124,10 +124,12 @@
     if (!anError) {
         
         //Show login
-        [self.logonUIViewManager.logonManager logon];
+        //[self.logonUIViewManager.logonManager logon];
     } else {
         NSLog(@"deleteUserFinishedWithError:%@", anError);
+        
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FDEU_USER_DELETE_FINISHED" object:nil];
 }
 
 -(void) changeSecureStorePasswordFinishedWithError:(NSError*)anError {
@@ -139,6 +141,14 @@
     
 
 }
+
+- (void) unregisterFinished:(NSError *)anError
+{
+    
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FDEU_UNREGISTER_FINISHED" object:nil];
+}
+
 
 -(void) startDemoMode {
     NSLog(@"startDemoMode");
