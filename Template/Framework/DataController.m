@@ -175,12 +175,12 @@
     */
     if (self.workingMode == WorkingModeOnline) {
     
-        NSLog(@"Store %@ picked for resourcePath:  %@", [self.networkStore description], resourcePath);
+        //NSLog(@"Store %@ picked for resourcePath:  %@", [self.networkStore description], resourcePath);
         return self.networkStore;
         
     } else if (self.workingMode == WorkingModeOffline) {
     
-        NSLog(@"Store %@ picked for resourcePath:  %@", [self.localStore description], resourcePath);
+        //NSLog(@"Store %@ picked for resourcePath:  %@", [self.localStore description], resourcePath);
         return self.localStore;
     }
     
@@ -188,7 +188,7 @@
     And if there are any defining requests to test anyway
     */
     if (self.definingRequests.count < 1) {
-        NSLog(@"Store %@ picked for resourcePath:  %@", [self.networkStore description], resourcePath);
+        //NSLog(@"Store %@ picked for resourcePath:  %@", [self.networkStore description], resourcePath);
         return self.networkStore;
     }
     
@@ -230,7 +230,7 @@
         
         if ((resourcePathCollectionName && definingRequestCollectionName) && [resourcePathCollectionName isEqualToString:definingRequestCollectionName]) {
             
-            NSLog(@"Store %@ picked for resourcePath:  %@", [self.localStore description], resourcePath);
+            //NSLog(@"Store %@ picked for resourcePath:  %@", [self.localStore description], resourcePath);
 
             return self.localStore;
         }
@@ -242,7 +242,7 @@
     of the defining request collections
     */
     
-    NSLog(@"Store %@ picked for resourcePath:  %@", [self.networkStore description], resourcePath);
+    //NSLog(@"Store %@ picked for resourcePath:  %@", [self.networkStore description], resourcePath);
     return self.networkStore;
 }
 
