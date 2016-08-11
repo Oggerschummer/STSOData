@@ -274,7 +274,12 @@
             } else {
                 
                 NSLog(@"Failed to open store, will not schedule request:  %@", [myRequest description]);
-                
+                //SAPMAY 20160706 BEGIN
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:NSLocalizedString(@"FDEU_ODATA_UNABLE_TO_OPEN_STORE", @"Could not open store to load data from server. Missing internet connection ?") forKey:NSLocalizedDescriptionKey];
+                NSError * error = [NSError errorWithDomain:@"FDEUMOPS" code:-200 userInfo:errorDetail];
+                //SAPMAY 20160706 END
+                completion(Nil, Nil, error);
             }
 
         }];
@@ -322,7 +327,7 @@
         if (response.isBatch)
         {
             // not yet implemented
-            NSLog(@"Batch Reuqest not implemented yet !");
+            NSLog(@"Batch Request not implemented yet !");
         }
         else // not a batch response, only one response to handle
         {
@@ -347,7 +352,7 @@
                 
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:e.message forKey:NSLocalizedDescriptionKey];
-                NSError *error = [NSError errorWithDomain:@"myDomain" code:[e.code integerValue] userInfo:errorDetail];
+                NSError *error = [NSError errorWithDomain:@"FDEUMOPS" code:[e.code integerValue] userInfo:errorDetail];
                 
                 
 #ifdef STS_SHOW_ALERT
@@ -386,7 +391,7 @@
             {
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:@"Unexpected payload type" forKey:NSLocalizedDescriptionKey];
-                NSError *error = [NSError errorWithDomain:@"myDomain" code:100 userInfo:errorDetail];
+                NSError *error = [NSError errorWithDomain:@"FDEUMOPS" code:-100 userInfo:errorDetail];
                 
                 // call the completion block with error and requestExecution
                 completion(nil, requestExecution, error);
