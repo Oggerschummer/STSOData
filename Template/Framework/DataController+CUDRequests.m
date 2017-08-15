@@ -81,13 +81,13 @@
                             withMode:SODataRequestModeCreate
                           withEntity:entity
                       withCompletion:^(NSArray *entities, id<SODataRequestExecution> requestExecution, NSError *error) {
-
-                          if (error) {
-                              completion(NO, nil);
-                          } else {
-                              completion(YES, entities[0]);
+                          if (completion){
+                              if (error) {
+                                  completion(NO, nil);
+                              } else {
+                                  completion(YES, entities[0]);
+                              }
                           }
-                          
                       }];
 }
 

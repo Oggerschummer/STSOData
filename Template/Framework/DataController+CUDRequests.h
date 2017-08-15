@@ -17,5 +17,4 @@
 -(void)updateEntity:(id<SODataEntity>) entity withCompletion:(void(^)(BOOL success))completion;
 -(void)deleteEntity:(id<SODataEntity>) entity withCompletion:(void(^)(BOOL success))completion;
 -(void)createEntity:(id<SODataEntity>) entity inCollection:(NSString *)collection withCompletion:(void(^)(BOOL success, SODataEntityDefault *newEntity))completion;
-
 @end

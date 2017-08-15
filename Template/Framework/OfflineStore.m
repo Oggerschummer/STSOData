@@ -163,8 +163,11 @@
     switch (newState)
     {
         case SODataOfflineStoreOpening:
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreOpening" object:store];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+
+            }];
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"SODataOfflineStoreOpening" object:store];
             NSLog(@"SODataOfflineStoreOpening: The store has started to open\n");
             break;
             
@@ -210,8 +213,9 @@
 
 -(void)offlineStoreOpenFinished:(SODataOfflineStore *)store
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
     if (self.isOpen) {
         NSString *openStoreFinished = [NSString stringWithFormat:@"%@.%@", kStoreOpenDelegateFinished, [self description]];
         
