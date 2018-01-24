@@ -23,20 +23,25 @@
      */
     self.logManager = [[SAPSupportabilityFacade sharedManager] getClientLogManager];
 #ifndef DEBUG
+    [self.logManager setLogLevel:ErrorClientLogLevel];
     [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_ODATAREQUEST];
     [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_ONLINESTORE];
     [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_OFFLINESTORE];
     [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_LOGUPLOAD];
-    //[self.logManager setLogLevel:ErrorClientLogLevel];
     [self.logManager setLogDestination:(CONSOLE | FILESYSTEM)];
     
-#endif
-#ifdef DEBUG
-    [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_ODATAREQUEST];
+#else
+  //[self.logManager setLogLevel:ErrorClientLogLevel];
+  #define LOG_HTTP       @"com.sap.smp.http"
+#define LOG_AUTHFLOW @"com.sap.smp.authflows"
+
+  [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_AUTHFLOW];
+    [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_HTTP];
+    [self.logManager setLogLevel:DebugClientLogLevel forIdentifier:LOG_ODATAREQUEST];
     [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_ONLINESTORE];
     [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_OFFLINESTORE];
-    [self.logManager setLogLevel:ErrorClientLogLevel forIdentifier:LOG_LOGUPLOAD];
-    //[self.logManager setLogLevel:DebugClientLogLevel];
+    [self.logManager setLogLevel:DebugClientLogLevel forIdentifier:LOG_LOGUPLOAD];
+
     [self.logManager setLogDestination:(CONSOLE | FILESYSTEM)];
 #endif
 }

@@ -15,4 +15,6 @@
 
 @optional
 - (void) flushAndRefresh:(void(^)(BOOL success))completion;
+- (void) flush:(void(^)(BOOL success))completion;
+- (void) refresh:(void(^)(BOOL success))completion;
 @end

@@ -201,9 +201,9 @@
 
 - (void) offlineStoreOpenFailed:(SODataOfflineStore *)store error:(NSError *)error
 {
-
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+      [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
     NSString *openStoreFailed = [NSString stringWithFormat:@"%@.%@", kStoreOpenDelegateFailed, [self description]];
     
     self.state = SODataOfflineStoreClosed;
