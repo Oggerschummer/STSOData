@@ -260,7 +260,7 @@
     NSString *refreshFailedNotification = [NSString stringWithFormat:@"%@.%@", kRefreshDelegateFailed, self.description];
     
     [[NSNotificationCenter defaultCenter] addObserver:self forName:refreshFinishedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note, id observer) {
-        
+        [[NSNotificationCenter defaultCenter] removeObserver:observer name:refreshFailedNotification object:observer];
         [[NSNotificationCenter defaultCenter] removeObserver:observer name:refreshFinishedNotification object:observer];
     
         completion(YES);
@@ -269,6 +269,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self forName:refreshFailedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note, id observer) {
         
         [[NSNotificationCenter defaultCenter] removeObserver:observer name:refreshFailedNotification object:observer];
+      [[NSNotificationCenter defaultCenter] removeObserver:observer name:refreshFinishedNotification object:observer];
     
         completion(NO);
     }];
@@ -311,12 +312,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self forName:flushFinishedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note, id observer) {
         
         [[NSNotificationCenter defaultCenter] removeObserver:observer name:flushFinishedNotification object:observer];
+      [[NSNotificationCenter defaultCenter] removeObserver:observer name:flushFailedNotification object:observer];
 
         completion(YES);
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self forName:flushFailedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note, id observer) {
-        
+        [[NSNotificationCenter defaultCenter] removeObserver:observer name:flushFinishedNotification object:observer];
         [[NSNotificationCenter defaultCenter] removeObserver:observer name:flushFailedNotification object:observer];
         
         completion(NO);
