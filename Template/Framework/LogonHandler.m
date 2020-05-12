@@ -31,8 +31,10 @@
 -(id) init {
 
     if(self == [super init]){
-        
-        [MAFUIStyleParser loadSAPDefaultStyle];
+        //OGGERSCHUMMER 20200512 BEGIN
+        //Disable Style Parser as it causes crash from iOS 13.4. on 
+        //[MAFUIStyleParser loadSAPDefaultStyle];
+        //OGGERSCHUMMER 20200512 END
         self.logonUIViewManager = [[MAFLogonUIViewManager alloc] init];
         self.logonUIViewManager.parentViewController = [[UIApplication sharedApplication] delegate].window.rootViewController;
         
