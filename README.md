@@ -4,7 +4,11 @@ A template and reusable MVC framework for the native iOS OData SAP Mobile SDK
 
 ##A template app, and reusable framework
 --------
-ATTENTION: This version has been adjusted for SP10 PL01, no longer compatible with old versions of the SDK. (Oggerschummer, 2015.10.08)
+ATTENTION: 
+- This version has been adjusted for SP10 PL01, no longer compatible with old versions of the SDK. (2015.10.08)
+- Style Parser has been disabled due to crash in MAF Registration screen starting iOS 13.4 (2020.05.12)
+
+I WOULD NOT RECOMMEND TO START A NEW PROJECT BASED ON THIS. Does rely on MAF Framework which has been removed in SDK 3.1
 --------
 
 We’ve been working with the new 3.0 SP05 API set for several months now, and some common usage patterns have developed around the core application components, best practices for MVC, etc. I’ve encapsulated these in a helper template called STSOData, and am making it available both as an example, and also as a reusable framework to app developers using the SDK. 
